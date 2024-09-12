@@ -1,0 +1,34 @@
+﻿<Window x:Class="PMC_Eight_Mount_Control.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PMC-Eight Mount Control" 
+        Height="600" 
+        Width="800"
+        Background="#1f1f1f">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="PMC-Eight Mount Control" FontSize="20" HorizontalAlignment="Center" Margin="10" Foreground="White"/>
+
+            <!-- COM Port Selection -->
+            <ComboBox ItemsSource="{Binding AvailableComPorts}" 
+                      SelectedItem="{Binding SelectedComPort}" 
+                      Width="100" 
+                      Margin="10"/>
+
+            <!-- Connect Button -->
+            <Button Content="Connect to PMC-Eight Mount" Command="{Binding ConnectCommand}" Margin="10"/>
+            <TextBlock Text="{Binding ConnectionStatus}" Margin="10" Foreground="White"/>
+
+            <!-- Get Mount Status Button -->
+            <Button Content="Get Mount Status" Command="{Binding GetMountStatusCommand}" Margin="10"/>
+            <TextBlock Text="{Binding MountStatus}" Margin="10" Foreground="White"/>
+
+            <!-- Launch Stellarium Button -->
+            <Button Content="Launch Stellarium" Command="{Binding LaunchStellariumCommand}" Margin="10"/>
+            <TextBlock Text="{Binding StellariumStatus}" Margin="10" Foreground="White"/>
+
+            <!-- Error Messages -->
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Window>

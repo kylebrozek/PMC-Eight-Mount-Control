@@ -4,9 +4,9 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
 
-        <!-- Style for rounded buttons with a custom background color (#c7b920) -->
-        <Style TargetType="Button">
+        <Style x:Key="HoverClickButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#c7b920"/>
+            <!-- Default background color -->
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="10,5"/>
@@ -19,7 +19,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
                                 CornerRadius="10" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}">
@@ -27,7 +27,55 @@
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <!-- Hover trigger -->
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#e0d400"/>
+                                <!-- Lighter yellow on hover -->
+                            </Trigger>
+                            <!-- Click trigger -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#b59b18"/>
+                                <!-- Darker yellow when clicked -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style for buttons with hover and click effects -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#c7b920"/>
+            <!-- Default background color -->
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="10" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Hover trigger -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#e0d400"/>
+                                <!-- Lighter yellow on hover -->
+                            </Trigger>
+                            <!-- Click trigger -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#b59b18"/>
+                                <!-- Darker yellow when clicked -->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

@@ -23,8 +23,14 @@ namespace PMC_Eight_Mount_Control.ViewModels
             AvailableComPorts = new ObservableCollection<string>(SerialPort.GetPortNames());
             _selectedComPort = AvailableComPorts.FirstOrDefault(); // Default to first available port
             ConnectCommand = new RelayCommand(ConnectToMount);
-            //GetMountStatusCommand = new RelayCommand(GetMountStatus);
             LaunchStellariumCommand = new RelayCommand(LaunchStellarium);
+
+            // Initialize the rate and movement commands
+            SelectedRate = "1 deg/s"; // Default rate
+            MoveNorthCommand = new RelayCommand(MoveNorth);
+            MoveSouthCommand = new RelayCommand(MoveSouth);
+            MoveEastCommand = new RelayCommand(MoveEast);
+            MoveWestCommand = new RelayCommand(MoveWest);
         }
 
         public ObservableCollection<string> AvailableComPorts { get; }
@@ -68,8 +74,23 @@ namespace PMC_Eight_Mount_Control.ViewModels
             set { _errorMessage = value; OnPropertyChanged(); }
         }
 
+        // New properties and commands for movement and rate selection
+        private string _selectedRate;
+        public string SelectedRate
+        {
+            get => _selectedRate;
+            set
+            {
+                _selectedRate = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand ConnectCommand { get; }
-        public ICommand GetMountStatusCommand { get; }
+        public ICommand MoveNorthCommand { get; }
+        public ICommand MoveSouthCommand { get; }
+        public ICommand MoveEastCommand { get; }
+        public ICommand MoveWestCommand { get; }
         public ICommand LaunchStellariumCommand { get; }
 
         private async void ConnectToMount()
@@ -105,20 +126,17 @@ namespace PMC_Eight_Mount_Control.ViewModels
             }
         }
 
+        private void MoveNorth() => MoveTelescope("North");
+        private void MoveSouth() => MoveTelescope("South");
+        private void MoveEast() => MoveTelescope("East");
+        private void MoveWest() => MoveTelescope("West");
 
-        /*
-                private void GetMountStatus()
-                {
-                    try
-                    {
-                        MountStatus = _pmcService.GetMountStatus();
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMessage = $"Error getting mount status: {ex.Message}";
-                    }
-                }
-        */
+        private void MoveTelescope(string direction)
+        {
+            // Implement actual movement logic based on the SelectedRate and direction
+            Console.WriteLine($"Moving {direction} at {SelectedRate}");
+        }
+
         private void LaunchStellarium()
         {
             try
@@ -133,7 +151,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

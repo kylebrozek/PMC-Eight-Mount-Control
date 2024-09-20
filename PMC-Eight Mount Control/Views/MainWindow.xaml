@@ -5,51 +5,65 @@
         Height="600" 
         Width="450"
         Background="#1f1f1f">
-    <Grid>
-        <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-            <TextBlock Text="PMC-Eight Mount Control" FontSize="20" HorizontalAlignment="Center" Margin="10" Foreground="White"/>
+    <DockPanel>
+        <!-- Toolbar -->
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Location Settings" Command="{Binding OpenLocationSettingsCommand}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <!-- COM Port Selection -->
-            <ComboBox ItemsSource="{Binding AvailableComPorts}" 
+                <TextBlock Text="PMC-Eight Mount Control" FontSize="20" HorizontalAlignment="Center" Margin="10" Foreground="White"/>
+
+                <!-- COM Port Selection -->
+                <ComboBox ItemsSource="{Binding AvailableComPorts}" 
                       SelectedItem="{Binding SelectedComPort}" 
                       Width="100" 
                       Margin="10"/>
 
-            <!-- Connect Button -->
-            <Button Content="Connect to PMC-Eight Mount" Command="{Binding ConnectCommand}" Margin="10"/>
-            <TextBlock Text="{Binding ConnectionStatus}" Margin="10" Foreground="White"/>
+                <!-- Connect Button -->
+                <Button Content="Connect to PMC-Eight Mount" Command="{Binding ConnectCommand}" Margin="10"/>
+                <Button Content="Launch Stellarium" Command="{Binding LaunchStellariumCommand}"/>
 
-            <!-- Rate Selection ComboBox (for telescope movement speed) -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,0">
-                <TextBlock Text="Rate:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <ComboBox Width="100" SelectedItem="{Binding SelectedRate}">
-                    <ComboBoxItem Content="1 deg/s"/>
-                    <ComboBoxItem Content="5 deg/s"/>
-                    <ComboBoxItem Content="20 deg/s"/>
-                </ComboBox>
-            </StackPanel>
-
-            <!-- Directional Control Buttons (N, S, E, W) -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
-                <!-- North Button -->
-                <Button Content="N" Command="{Binding MoveNorthCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,0,10"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <!-- West Button -->
-                    <Button Content="W" Command="{Binding MoveWestCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,10,0"/>
-                    <!-- East Button -->
-                    <Button Content="E" Command="{Binding MoveEastCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,0,0"/>
+                <!-- Rate Selection ComboBox (for telescope movement speed) -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,0">
+                    <TextBlock Text="Rate:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox Width="100" SelectedItem="{Binding SelectedRate}">
+                        <ComboBoxItem Content="1 deg/s"/>
+                        <ComboBoxItem Content="5 deg/s"/>
+                        <ComboBoxItem Content="20 deg/s"/>
+                    </ComboBox>
                 </StackPanel>
-                <!-- South Button -->
-                <Button Content="S" Command="{Binding MoveSouthCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,10,0,0"/>
-            </StackPanel>
-            
-            <!-- Launch Stellarium Button -->
-            <Button Content="Launch Stellarium" Command="{Binding LaunchStellariumCommand}" Margin="10"/>
-            <TextBlock Text="{Binding StellariumStatus}" Margin="10" Foreground="White"/>
 
-            <!-- Error Messages -->
-            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="10"/>
-        </StackPanel>
-    </Grid>
+                <!-- Directional Control Buttons (N, S, E, W, and STOP) -->
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
+                    <!-- North Button -->
+                    <Button Content="N" Command="{Binding MoveNorthCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <!-- West Button -->
+                        <Button Content="W" Command="{Binding MoveWestCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,10,0"/>
+
+                        <!-- STOP Button -->
+                        <Button Content="STOP" Command="{Binding StopCommand}" Width="60" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,10,0"/>
+
+                        <!-- East Button -->
+                        <Button Content="E" Command="{Binding MoveEastCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,0,0,0"/>
+                    </StackPanel>
+
+                    <!-- South Button -->
+                    <Button Content="S" Command="{Binding MoveSouthCommand}" Width="40" Height="40" Style="{StaticResource HoverClickButtonStyle}" Margin="0,10,0,0"/>
+                </StackPanel>
+                <TextBlock Text="{Binding ConnectionStatus}" Foreground="White" HorizontalAlignment="Center"/>
+
+                <!-- Launch Stellarium Button -->
+                <TextBlock Text="{Binding StellariumStatus}" Margin="10" Foreground="White" HorizontalAlignment="Center"/>
+
+                <!-- Error Messages -->
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>

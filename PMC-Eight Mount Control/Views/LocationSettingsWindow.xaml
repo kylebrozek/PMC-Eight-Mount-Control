@@ -1,0 +1,24 @@
+﻿<Window x:Class="PMC_Eight_Mount_Control.Views.LocationSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Location Settings" 
+        Height="255" 
+        Width="225"
+        Background="#1f1f1f">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Site Location Settings" FontSize="16" Foreground="White" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Latitude:" Foreground="White"/>
+            <TextBox Text="{Binding Latitude, Mode=TwoWay}" Width="200"/>
+
+            <TextBlock Text="Longitude:" Foreground="White" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding Longitude, Mode=TwoWay}" Width="200"/>
+
+            <TextBlock Text="Elevation (m):" Foreground="White" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding Elevation, Mode=TwoWay}" Width="200"/>
+
+            <Button Content="Save" Command="{Binding SaveLocationCommand}" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

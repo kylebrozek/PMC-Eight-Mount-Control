@@ -12,14 +12,17 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="10,10,10,33">
             <TextBlock Text="Telescope Settings" FontSize="16" Foreground="White" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Telescope Model:" Foreground="White"/>
-            <TextBox Text="{Binding Model, Mode=TwoWay}" Width="200"/>
+            <TextBlock Text="Telescope Model:" FontSize="16" Foreground="White"/>
+            <ComboBox x:Name="TelescopeModelComboBox"
+             ItemsSource="{Binding TelescopeModels}"
+             SelectedItem="{Binding SelectedTelescopeModel, Mode=TwoWay}"
+             Width="200"/>
 
         </StackPanel>
 
         <StackPanel Margin="10,99,10,33">
-            <TextBlock Text="Site Location Settings" FontSize="16" Foreground="White" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Site Location Settings" FontSize="16" Foreground="White"/>
 
             <TextBlock Text="Latitude:" Foreground="White"/>
             <TextBox Text="{Binding Latitude, Mode=TwoWay}" Width="200"/>

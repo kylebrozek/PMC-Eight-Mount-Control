@@ -8,6 +8,7 @@ using PMC_Eight_Mount_Control.Helpers;
 using PMC_Eight_Mount_Control.Models;
 using Newtonsoft.Json;
 using System.Windows.Controls.Primitives;
+using System.Collections.ObjectModel;
 
 namespace PMC_Eight_Mount_Control.ViewModels
 {
@@ -18,6 +19,30 @@ namespace PMC_Eight_Mount_Control.ViewModels
         private string _elevation;
 
         private readonly string ConfigFilePath = ("C:\\Users\\kyleb\\source\\repos\\PMC-Eight Mount Control\\PMC-Eight Mount Control\\bin\\DebuglocationConfig.json"); //json wouldn't instantiate so I had to specify the location. 
+
+        public ObservableCollection<string> TelescopeModels { get; } = new ObservableCollection<string>
+   {
+       "Explore Scientific EXOS II",
+       "Losmandy G-11",
+       "Explore Scientific iEXOS-100",
+       "Explore Scientific iEXOS-200",
+       "Explore Scientific iEXOS-300",
+       "Losmandy Titan",
+       "Scotty",
+       "MSREQ"
+   };
+
+        private string _selectedTelescopeModel;
+        public string SelectedTelescopeModel
+        {
+            get => _selectedTelescopeModel;
+            set
+            {
+                _selectedTelescopeModel = value;
+                OnPropertyChanged();
+                UpdateTelescopeModel(); // Trigger update when changed
+            }
+        }
 
         public string Latitude
         {
@@ -109,6 +134,24 @@ namespace PMC_Eight_Mount_Control.ViewModels
             {
                 // Handle any errors here (e.g., invalid input or driver errors)
                 Console.WriteLine($"Error updating location: {ex.Message}");
+            }
+        }
+
+        private void UpdateTelescopeModel()
+        {
+            try
+            {
+                using (var telescope = new Telescope("ASCOM.ES_PMC8.Telescope"))
+                {
+                    telescope.Connected = true;
+                    telescope.CommandString($":SET_MODEL_{SelectedTelescopeModel.Replace(" ", "_")}", false); // Example ASCOM format
+                    Console.WriteLine($"Telescope model set to {SelectedTelescopeModel}");
+                    telescope.Connected = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating telescope model: {ex.Message}");
             }
         }
 

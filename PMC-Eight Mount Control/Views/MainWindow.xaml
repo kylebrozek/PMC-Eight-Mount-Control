@@ -9,7 +9,8 @@
         <!-- Toolbar -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Content="Location Settings" Command="{Binding OpenLocationSettingsCommand}"/>
+                <Button Content="Telescope Settings" Command="{Binding OpenLocationSettingsCommand}"/>
+                <Button Content="Flash Firmware"    Command="{Binding OpenFirmwareFlashCommand}"/>
             </ToolBar>
         </ToolBarTray>
         <Grid>

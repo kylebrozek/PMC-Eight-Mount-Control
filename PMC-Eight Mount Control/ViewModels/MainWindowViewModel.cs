@@ -21,11 +21,13 @@ namespace PMC_Eight_Mount_Control.ViewModels
         private readonly PMCConfigurationService _pmcService;
         private readonly StellariumService _stellariumService;
         public ICommand OpenLocationSettingsCommand { get; }
+        public ICommand OpenFirmwareFlashCommand { get; }
 
         public MainWindowViewModel()
         {
             LoadLocationData();
             OpenLocationSettingsCommand = new RelayCommand(OpenLocationSettings);
+            OpenFirmwareFlashCommand = new RelayCommand(OpenFirmwareFlashWindow);
             _pmcService = new PMCConfigurationService();
             _stellariumService = new StellariumService();
             AvailableComPorts = new ObservableCollection<string>(SerialPort.GetPortNames());
@@ -290,6 +292,15 @@ namespace PMC_Eight_Mount_Control.ViewModels
             {
                 ErrorMessage = $"Error launching Stellarium: {ex.Message}";
             }
+        }
+
+        private void OpenFirmwareFlashWindow()
+        {
+            var firmwareFlashWindow = new FirmwareFlashWindow
+            {
+                DataContext = new FirmwareFlashViewModel()
+            };
+            firmwareFlashWindow.Show();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -82,8 +82,12 @@
     <Compile Include="Models\LocationData.cs" />
     <Compile Include="Services\PMCConfigurationService.cs" />
     <Compile Include="Services\StellariumService.cs" />
+    <Compile Include="ViewModels\FirmwareFlashViewModel.cs" />
     <Compile Include="ViewModels\LocationSettingsViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\FirmwareFlashWindow.xaml.cs">
+      <DependentUpon>FirmwareFlashWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LocationSettingsWindow.xaml.cs">
       <DependentUpon>LocationSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +124,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\FirmwareFlashWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LocationSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -107,7 +107,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
             try
             {
                 // Save to the ASCOM driver
-                using (var telescope = new Telescope("ASCOM.ES_PMC8.Telescope"))
+                using (var telescope = new Telescope("ASCOM.DeviceHub.Telescope"))
                 {
                     telescope.Connected = true;
                     telescope.SiteLatitude = double.Parse(Latitude);
@@ -141,7 +141,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
         {
             try
             {
-                using (var telescope = new Telescope("ASCOM.ES_PMC8.Telescope"))
+                using (var telescope = new Telescope("ASCOM.DeviceHub.Telescope"))
                 {
                     telescope.Connected = true;
                     telescope.CommandString($":SET_MODEL_{SelectedTelescopeModel.Replace(" ", "_")}", false); // Example ASCOM format

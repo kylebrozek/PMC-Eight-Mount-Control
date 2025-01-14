@@ -13,6 +13,7 @@ using PMC_Eight_Mount_Control.Services;
 using PMC_Eight_Mount_Control.Views;
 using PMC_Eight_Mount_Control.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace PMC_Eight_Mount_Control.ViewModels
 {
@@ -68,7 +69,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
                     var locationData = JsonConvert.DeserializeObject<LocationData>(json);
 
                     // Apply this data to the telescope driver
-                    using (var telescope = new Telescope("ASCOM.ES_PMC8.Telescope"))
+                    using (var telescope = new Telescope("ASCOM.DeviceHub.Telescope"))
                     {
                         telescope.Connected = true;
                         telescope.SiteLatitude = locationData.Latitude;
@@ -154,22 +155,44 @@ namespace PMC_Eight_Mount_Control.ViewModels
         {
             try
             {
-                // Call the asynchronous connection method
+                // Check if Device Hub is already running
+                if (!IsDeviceHubRunning())
+                {
+                    LaunchDeviceHub();  // Launch Device Hub
+                    await Task.Delay(2000); // Wait 2 seconds for Device Hub to initialize
+                }
+
+                telescope = new ASCOM.DriverAccess.Telescope("ASCOM.DeviceHub.Telescope");
+
+                // Connect to the telescope
                 ConnectionStatus = "Connecting to mount...";
-
-                // Connect to the mount
-                string connectionResult = await _pmcService.ConnectToMountAsync();
-                ConnectionStatus = connectionResult;
-
-                // Update the SelectedComPort in the ViewModel so that the ComboBox shows the correct port
-                SelectedComPort = _pmcService.SelectedComPort;
-
-                // Refresh the list of available COM ports to make sure the ComboBox reflects all options
-                RefreshAvailableComPorts();
+                telescope.Connected = true;
+                ConnectionStatus = "Mount connected successfully via Device Hub.";
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"Error connecting to mount: {ex.Message}";
+            }
+        }
+
+        private bool IsDeviceHubRunning()
+        {
+            // Check if the Device Hub process is running
+            return Process.GetProcessesByName("DeviceHub").Length > 0;
+        }
+
+        private void LaunchDeviceHub()
+        {
+            string deviceHubPath = @"C:\Program Files (x86)\Common Files\ASCOM\DeviceHub\ASCOM.DeviceHub.exe"; // Typical path
+
+            if (File.Exists(deviceHubPath))
+            {
+                Process.Start(deviceHubPath);
+                Console.WriteLine("Device Hub launched.");
+            }
+            else
+            {
+                ErrorMessage = "Error: Device Hub executable not found.";
             }
         }
 
@@ -194,7 +217,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
             {
                 if (telescope == null)
                 {
-                    telescope = new ASCOM.DriverAccess.Telescope("ASCOM.ES_PMC8.Telescope");
+                    telescope = new ASCOM.DriverAccess.Telescope("ASCOM.DeviceHub.Telescope");
                 }
 
                 if (!telescope.Connected)
@@ -219,7 +242,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
             {
                 if (telescope == null)
                 {
-                    telescope = new ASCOM.DriverAccess.Telescope("ASCOM.ES_PMC8.Telescope");
+                    telescope = new ASCOM.DriverAccess.Telescope("ASCOM.DeviceHub.Telescope");
                 }
 
                 if (!telescope.Connected)

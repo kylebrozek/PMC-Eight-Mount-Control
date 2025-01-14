@@ -11,8 +11,8 @@
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
         <StackPanel Margin="10,10,10,33">
-            <TextBlock Text="Telescope Settings" FontSize="16" Foreground="White" Margin="0,0,0,10"/>
-            <TextBlock Text="Telescope Model:" FontSize="16" Foreground="White"/>
+            <TextBlock Text="Telescope Settings" FontSize="16" Foreground="#FFC7B920" Margin="0,0,0,10"/>
+            <TextBlock Text="Telescope Model:" FontSize="16" Foreground="#FFC7B920"/>
             <ComboBox x:Name="TelescopeModelComboBox"
              ItemsSource="{Binding TelescopeModels}"
              SelectedItem="{Binding SelectedTelescopeModel, Mode=TwoWay}"
@@ -22,15 +22,15 @@
 
         <StackPanel Margin="10,99,10,33">
 
-            <TextBlock Text="Site Location Settings" FontSize="16" Foreground="White"/>
+            <TextBlock Text="Site Location Settings" FontSize="16" Foreground="#FFC7B920"/>
 
-            <TextBlock Text="Latitude:" Foreground="White"/>
+            <TextBlock Text="Latitude:" Foreground="#FFC7B920"/>
             <TextBox Text="{Binding Latitude, Mode=TwoWay}" Width="200"/>
 
-            <TextBlock Text="Longitude:" Foreground="White" Margin="0,10,0,0"/>
+            <TextBlock Text="Longitude:" Foreground="#FFC7B920" Margin="0,10,0,0"/>
             <TextBox Text="{Binding Longitude, Mode=TwoWay}" Width="200"/>
 
-            <TextBlock Text="Elevation (m):" Foreground="White" Margin="0,10,0,0"/>
+            <TextBlock Text="Elevation (m):" Foreground="#FFC7B920" Margin="0,10,0,0"/>
             <TextBox Text="{Binding Elevation, Mode=TwoWay}" Width="200"/>
 
             <Button Content="Save" Command="{Binding SaveLocationCommand}" Margin="0,10,0,0"/>

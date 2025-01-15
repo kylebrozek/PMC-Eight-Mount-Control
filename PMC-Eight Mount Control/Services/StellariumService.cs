@@ -18,7 +18,14 @@ namespace PMC_Eight_Mount_Control.Services
                 ModifyStellariumConfig(configFilePath);
 
                 // Launch Stellarium
-                Process.Start(@"C:\Program Files\Stellarium\stellarium.exe");
+                // Launch Stellarium
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = @"C:\Program Files\Stellarium\stellarium.exe",
+                    Arguments = "--single-buffer",
+                    UseShellExecute = true
+                });
+
 
                 return "Stellarium launched successfully.";
             }

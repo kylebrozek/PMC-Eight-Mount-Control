@@ -65,7 +65,7 @@
                 <TextBlock Text="{Binding StellariumStatus}" Margin="10" Foreground="#FFC7B920" HorizontalAlignment="Center"/>
 
                 <!-- Error Messages -->
-                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="10" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="300"/>
             </StackPanel>
         </Grid>
     </DockPanel>

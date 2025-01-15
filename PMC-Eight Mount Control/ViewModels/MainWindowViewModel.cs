@@ -155,25 +155,25 @@ namespace PMC_Eight_Mount_Control.ViewModels
         {
             try
             {
-                // Check if Device Hub is already running
-                if (!IsDeviceHubRunning())
-                {
-                    LaunchDeviceHub();  // Launch Device Hub
-                    await Task.Delay(2000); // Wait 2 seconds for Device Hub to initialize
-                }
-
-                telescope = new ASCOM.DriverAccess.Telescope("ASCOM.DeviceHub.Telescope");
-
-                // Connect to the telescope
                 ConnectionStatus = "Connecting to mount...";
-                telescope.Connected = true;
-                ConnectionStatus = "Mount connected successfully via Device Hub.";
+                string connectionResult = await _pmcService.ConnectToMountAsync();
+
+                // Only update UI if the response indicates a successful connection
+                if (connectionResult.Contains("connected"))
+                {
+                    ConnectionStatus = connectionResult;
+                }
+                else
+                {
+                    ErrorMessage = "Connection failed: " + connectionResult;
+                }
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"Error connecting to mount: {ex.Message}";
             }
         }
+
 
         private bool IsDeviceHubRunning()
         {

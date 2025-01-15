@@ -50,6 +50,7 @@ namespace PMC_Eight_Mount_Control.Services
                         return $"Mount connected on {SelectedComPort}. Configuration updated.";
                     }
                 }
+
             }
             catch (Exception ex)
             {

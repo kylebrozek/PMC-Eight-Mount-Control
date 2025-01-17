@@ -18,7 +18,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
         private string _longitude;
         private string _elevation;
 
-        private readonly string ConfigFilePath = ("C:\\Users\\kyleb\\source\\repos\\PMC-Eight Mount Control\\PMC-Eight Mount Control\\bin\\DebuglocationConfig.json"); //json wouldn't instantiate so I had to specify the location. 
+        private readonly string ConfigFilePath = @"C:\Users\kyleb\source\repos\PMC-Eight-Mount-Control\PMC-Eight Mount Control\bin\Debug\locationConfig.json"; //json wouldn't instantiate so I had to specify the location. 
 
         public ObservableCollection<string> TelescopeModels { get; } = new ObservableCollection<string>
    {
@@ -101,7 +101,16 @@ namespace PMC_Eight_Mount_Control.ViewModels
                 }
             }
         }
-
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
         private void SaveLocation()
         {
             try
@@ -115,6 +124,9 @@ namespace PMC_Eight_Mount_Control.ViewModels
                     telescope.SiteElevation = double.Parse(Elevation);
                     telescope.Connected = false;
                 }
+
+                // Clear error message if successful
+                ErrorMessage = string.Empty;
 
                 // Save location data to a JSON file for future use
                 var locationData = new
@@ -132,8 +144,8 @@ namespace PMC_Eight_Mount_Control.ViewModels
             }
             catch (Exception ex)
             {
-                // Handle any errors here (e.g., invalid input or driver errors)
-                Console.WriteLine($"Error updating location: {ex.Message}");
+                // Capture and display the error message from the driver
+                ErrorMessage = ex.Message;
             }
         }
 

@@ -155,24 +155,33 @@ namespace PMC_Eight_Mount_Control.ViewModels
         {
             try
             {
+                // Update connection status
                 ConnectionStatus = "Connecting to mount...";
+
+                // Attempt to connect to the mount
                 string connectionResult = await _pmcService.ConnectToMountAsync();
 
-                // Only update UI if the response indicates a successful connection
+                // Check if connection succeeded
                 if (connectionResult.Contains("connected"))
                 {
-                    ConnectionStatus = connectionResult;
+                    // Clear previous errors
+                    ErrorMessage = string.Empty;
                 }
-                else
-                {
-                    ErrorMessage = "Connection failed: " + connectionResult;
-                }
+
+                // Update connection status and selected port
+                ConnectionStatus = connectionResult;
+                SelectedComPort = _pmcService.SelectedComPort;
+
+                // Refresh available COM ports
+                RefreshAvailableComPorts();
             }
             catch (Exception ex)
             {
+                // Display the error message
                 ErrorMessage = $"Error connecting to mount: {ex.Message}";
             }
         }
+
 
 
         private bool IsDeviceHubRunning()
@@ -183,7 +192,13 @@ namespace PMC_Eight_Mount_Control.ViewModels
 
         private void LaunchDeviceHub()
         {
-            string deviceHubPath = @"C:\Program Files (x86)\Common Files\ASCOM\DeviceHub\ASCOM.DeviceHub.exe"; // Typical path
+            if (IsDeviceHubRunning())
+            {
+                Console.WriteLine("Device Hub is already running.");
+                return;
+            }
+
+            string deviceHubPath = @"C:\Program Files (x86)\Common Files\ASCOM\Telescope\DeviceHub.exe";
 
             if (File.Exists(deviceHubPath))
             {
@@ -195,6 +210,7 @@ namespace PMC_Eight_Mount_Control.ViewModels
                 ErrorMessage = "Error: Device Hub executable not found.";
             }
         }
+
 
         private void RefreshAvailableComPorts()
         {

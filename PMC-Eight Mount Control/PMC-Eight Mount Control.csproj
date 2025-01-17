@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\StringToVisibilityConverter.cs" />
     <Compile Include="Models\LocationData.cs" />
     <Compile Include="Services\PMCConfigurationService.cs" />
     <Compile Include="Services\StellariumService.cs" />

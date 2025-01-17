@@ -1,7 +1,8 @@
 ﻿<Application x:Class="PMC_Eight_Mount_Control.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Views/MainWindow.xaml">
+             StartupUri="Views/MainWindow.xaml" xmlns:local="clr-namespace:PMC_Eight_Mount_Control.Converters">
+    
     <Application.Resources>
 
         <Style x:Key="HoverClickButtonStyle" TargetType="Button">
@@ -83,5 +84,6 @@
             </Setter>
         </Style>
 
+       <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     </Application.Resources>
 </Application>
